@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const mensagemCodificada = encodeURIComponent(mensagem);
         
         // Abrir WhatsApp
-        window.open(`https://wa.me/${numeroContratado}?text=${mensagemCodificada}`, '_blank');
+        window.open(`https://wa.me/${+5521990689065}?text=${mensagemCodificada}`, '_blank');
         
         // Opcional: Limpar formulário após envio
         // e.target.reset();
