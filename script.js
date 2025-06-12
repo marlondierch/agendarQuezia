@@ -52,13 +52,13 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Número do contratado (substitua pelo número real)
         // Formato: 55DDDNUMERO (sem espaços, parênteses ou traço)
-        const numeroContratado = '+5521990689065'; // Substitua pelo número real
+        const numeroContratado = '+5521993776791'; // Substitua pelo número real
         
         // Codificar mensagem para URL
         const mensagemCodificada = encodeURIComponent(mensagem);
         
         // Abrir WhatsApp
-        window.open(`https://wa.me/${+5521990689065}?text=${mensagemCodificada}`, '_blank');
+        window.open(`https://wa.me/${+5521993776791}?text=${mensagemCodificada}`, '_blank');
         
         // Opcional: Limpar formulário após envio
         // e.target.reset();
