@@ -1,52 +1,204 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agendamento via WhatsApp</title>
+    <title>Agendamento - Fisioterapeuta Quézia</title>
+    <!-- Inclui o Bootstrap CSS para estilização e responsividade -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" xintegrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Fonte Inter para um visual moderno -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="img/preto-04-04.png" type="image/x-icon">
+
 </head>
 <body>
+
     <div class="container">
-        <h1>Agende seu Horário</h1>
-        <p>Preencha o formulário e enviaremos uma mensagem direto para nosso WhatsApp</p>
-        
+        <h2>Agendamento de Fisioterapia com a Dra. Quézia</h2>
         <form id="agendamentoForm">
-            <div class="form-group">
-                <label for="nome">Seu Nome:</label>
-                <input type="text" id="nome" placeholder="Digite seu nome completo" required>
+            <div class="mb-3">
+                <label for="nome" class="form-label">Nome Completo:</label>
+                <input type="text" class="form-control" id="nome" placeholder="Seu nome" required>
             </div>
-            
-            <div class="form-group">
-                <label for="servico">Serviço Desejado:</label>
-                <select id="servico" required>
-                    <option value="">Selecione um serviço</option>
-                    <option value="Consulta">Consulta</option>
-                    <option value="Orçamento">Orçamento</option>
-                    <option value="Avaliacao">Avaliação</option>
-                    <option value="Outro">Outro</option>
+            <div class="mb-3">
+                <label for="servico" class="form-label">Tipo de Sessão:</label>
+                <select class="form-select" id="servico" required>
+                    <option value="">Selecione o serviço de fisioterapia</option>
+                    <option value="Avaliação Inicial">Avaliação Inicial</option>
+                    <option value="Pilates">Pilates</option>
+                
+                    <option value="Reabilitação">Reabilitação</option>
+                    <option value="Pré e Pós-cirúrgico">Pré e Pós-cirúrgico</option>
+                    <option value="Saude do Idoso">Saúde do Idoso</option>
+                    <option value="Doenca de Parkinson">Doença de Parkinson</option>
+                    <option value="Ventosaterapia">Ventosaterapia</option>
+                    <option value="Dry Needling">Dry Needling</option>
+                    <option value="Massagem Relaxante">Massagem Relaxante</option>
+                    <option value="Liberacao Miofascial">Liberação Miofascial</option>
                 </select>
             </div>
-            
-            <div class="form-group">
-                <label for="data">Data e Hora:</label>
-                <input type="datetime-local" id="datahora" required>
+            <div class="mb-3">
+                <label for="datahora" class="form-label">Data e Hora Preferenciais:</label>
+                <!-- Adicionado o atributo 'max' para limitar a hora a 19:00 -->
+                <input type="datetime-local" class="form-control" id="datahora" required max="2030-12-31T19:00">
             </div>
-            
-            <div class="form-group">
-                <label for="telefone">WhatsApp:</label>
-                <input type="tel" id="telefone" placeholder="(00) 00000-0000" required>
+            <div class="mb-3">
+                <label for="telefone" class="form-label">WhatsApp para Contato (com DDD):</label>
+                <input type="tel" class="form-control" id="telefone" placeholder="(XX) XXXXX-XXXX" required pattern="\(\d{2}\) \d{5}-\d{4}">
             </div>
-            
-            <div class="form-group">
-                <label for="mensagem">Mensagem Adicional:</label>
-                <textarea id="mensagem" rows="3" placeholder="Alguma informação adicional?"></textarea>
+            <div class="mb-3">
+                <label for="mensagem" class="form-label">Observações (opcional):</label>
+                <textarea class="form-control" id="mensagem" rows="3" placeholder="Ex: Dor na lombar, acompanhante, etc."></textarea>
             </div>
-            
-            <button type="submit">Agendar via WhatsApp</button>
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary">Agendar via WhatsApp</button>
+            </div>
         </form>
     </div>
 
-    <script src="script.js"></script>
+    <!-- Modal para mensagens ao utilizador (substitui 'alert()') -->
+    <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="messageModalLabel"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="messageModalBody">
+                    <!-- A mensagem será inserida aqui -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Inclui o Bootstrap JS (com Popper) para funcionalidades como modais -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" xintegrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Referência para o modal de mensagens
+            const messageModal = new bootstrap.Modal(document.getElementById('messageModal'));
+            const messageModalLabel = document.getElementById('messageModalLabel');
+            const messageModalBody = document.getElementById('messageModalBody');
+
+            /**
+             * Exibe uma mensagem para o utilizador num modal Bootstrap.
+             * @param {string} title - O título do modal.
+             * @param {string} message - O corpo da mensagem a ser exibida.
+             */
+            function showMessageModal(title, message) {
+                messageModalLabel.textContent = title;
+                messageModalBody.textContent = message;
+                messageModal.show();
+            }
+
+            // Máscara para telefone (formato (00) 00000-0000)
+            const telefoneInput = document.getElementById('telefone');
+            telefoneInput.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, ''); // Remove tudo o que não é dígito
+                
+                // Limita o valor a 11 dígitos para DDD + 9 dígitos
+                if (value.length > 11) {
+                    value = value.substring(0, 11);
+                }
+                
+                // Aplica a máscara: (00) 00000-0000
+                if (value.length > 2) {
+                    value = `(${value.substring(0, 2)}) ${value.substring(2)}`;
+                }
+                if (value.length > 10) { // Considerando os caracteres da máscara: (XX) XXXXX
+                    value = `${value.substring(0, 10)}-${value.substring(10)}`;
+                }
+                
+                e.target.value = value;
+            });
+
+            // Formulário de agendamento
+            document.getElementById('agendamentoForm').addEventListener('submit', function(e) {
+                e.preventDefault(); // Impede o envio padrão do formulário
+
+                // Obter valores do formulário
+                const nome = document.getElementById('nome').value.trim();
+                const servico = document.getElementById('servico').value;
+                const datahora = document.getElementById('datahora').value;
+                const telefone = document.getElementById('telefone').value;
+                const mensagemAdicional = document.getElementById('mensagem').value.trim();
+                
+                // Validar telefone (pelo menos 11 dígitos numéricos)
+                const apenasNumeros = telefone.replace(/\D/g, '');
+                if (apenasNumeros.length < 11) {
+                    showMessageModal('Erro de Validação', 'Por favor, insira um número de WhatsApp válido com 11 dígitos (DDD + número).');
+                    return; // Interrompe a execução se o telefone for inválido
+                }
+
+                // --- VALIDAÇÃO: Horário limite até às 19h ---
+                if (datahora) {
+                    const selectedTime = datahora.split('T')[1]; // Extrai "HH:MM"
+                    if (selectedTime) { // Garante que a parte da hora existe
+                        const [hours, minutes] = selectedTime.split(':').map(Number); // Converte para números
+
+                        // Verifica se a hora é maior que 19 OU se é 19h e os minutos são maiores que 00
+                        if (hours > 19 || (hours === 19 && minutes > 0)) {
+                            showMessageModal('Erro de Horário', 'O agendamento deve ser feito até as 19h (7 PM). Por favor, escolha um horário válido.');
+                            return; // Interrompe o envio do formulário
+                        }
+                    }
+                } else {
+                    showMessageModal('Erro de Validação', 'Por favor, selecione uma data e hora para o agendamento.');
+                    return;
+                }
+                // --- FIM DA VALIDAÇÃO ---
+                
+                // Formatar data e hora para exibição na mensagem
+                const dataFormatada = formatarDataHora(datahora);
+                
+                // Criar mensagem para WhatsApp
+                let mensagem = `Olá Dra. Quézia, meu nome é ${nome}.\n`;
+                mensagem += `Gostaria de agendar uma ${servico} para ${dataFormatada}.\n`;
+                
+                if (mensagemAdicional) {
+                    mensagem += `\nObservações: ${mensagemAdicional}\n`;
+                }
+                
+                mensagem += `\n*Este agendamento foi solicitado através do seu website.*`;
+                
+                // Número da Dra. Quézia para o qual a mensagem será enviada
+                // Formato: 55DDDNUMERO (sem espaços, parênteses ou traços)
+                const numeroQuezia = '5521974066238'; // Substitua pelo número real da Dra. Quézia!
+
+                // Codificar mensagem para URL para garantir que caracteres especiais funcionem no link
+                const mensagemCodificada = encodeURIComponent(mensagem);
+                
+                // Abrir WhatsApp em uma nova aba
+                window.open(`https://wa.me/${numeroQuezia}?text=${mensagemCodificada}`, '_blank');
+                
+                // Mensagem de sucesso após abrir o WhatsApp
+                showMessageModal('Agendamento Solicitado!', 'Você será redirecionado para o WhatsApp para confirmar a sua solicitação.');
+                
+                // Opcional: Limpar formulário após o envio bem-sucedido
+                // e.target.reset();
+            });
+            
+            /**
+             * Formata uma string de data e hora no formato ISO 8601 (YYYY-MM-DDTHH:MM)
+             * para um formato mais legível (DD/MM/YYYY às HHhMM).
+             * @param {string} datahora - String de data e hora do input datetime-local.
+             * @returns {string} Data e hora formatadas.
+             */
+            function formatarDataHora(datahora) {
+                if (!datahora) return '';
+                
+                const [data, hora] = datahora.split('T');
+                const [ano, mes, dia] = data.split('-');
+                const [horas, minutos] = hora.split(':');
+                
+                return `${dia}/${mes}/${ano} às ${horas}h${minutos}`;
+            }
+        });
+    </script>
+
 </body>
 </html>

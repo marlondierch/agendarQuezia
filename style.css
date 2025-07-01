@@ -1,72 +1,67 @@
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    line-height: 1.6;
-    margin: 0;
-    padding: 0;
-    background-color: #7a4673;
-    color: #561b43;
-}
 
-.container {
-    max-width: 600px;
-    margin: 30px auto;
-    padding: 20px;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-h1 {
-    color: #25D366;
-    text-align: center;
-}
-
-p {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.form-group {
-    margin-bottom: 20px;
-}
-
-label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-
-input, select, textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 16px;
-}
-
-textarea {
-    resize: vertical;
-}
-
-button {
-    background-color: #25D366;
-    color: white;
-    border: none;
-    padding: 12px 20px;
-    width: 100%;
-    font-size: 16px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-button:hover {
-    background-color: #128C7E;
-}
-
-@media (max-width: 600px) {
-    .container {
-        margin: 15px;
-        padding: 15px;
-    }
-}
+        /* Estilos gerais para o corpo da página */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #7C3770;/* Cor de fundo atualizada para #FFF5FF (quase branco/rosa muito claro) */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        /* Estilos para o container principal do formulário */
+        .container {
+            background-color: #FFF5FF; /* Cor de fundo do container atualizada para #FFF5FF */
+            padding: 35px;
+            border-radius: 15px; /* Cantos mais arredondados */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* Sombra mais visível */
+            max-width: 600px;
+            width: 100%;
+        }
+        /* Estilos para o título do formulário */
+        h2 {
+            color: #7C3770; /* Ajustado para a cor original do tema para melhor contraste no fundo claro */
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: 700; /* Mais negrito */
+        }
+        /* Estilos para os rótulos dos campos do formulário */
+        .form-label {
+            font-weight: 600; /* Mais negrito */
+            color: #333333; /* Ajustado para cinza escuro para melhor contraste */
+        }
+        /* Estilos para os campos de input quando em foco */
+        .form-control:focus {
+            border-color: #9A5A8F; /* Mantido o tom de roxo mais claro no foco */
+            box-shadow: 0 0 0 0.25rem rgba(154, 90, 143, 0.25); /* Sombra de foco mais clara */
+        }
+        /* Estilos para o botão principal de agendamento */
+        .btn-primary {
+            background-color: #05c732; /* Mantido o tom de roxo principal */
+            border-color: #ece9ec;
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            border-radius: 10px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        /* Efeito hover para o botão principal */
+        .btn-primary:hover {
+            background-color: #62d26c; /* Tom mais escuro no hover */
+            border-color: #6C2B60;
+            transform: translateY(-2px); /* Pequeno movimento para cima */
+        }
+        /* Estilos para o cabeçalho do modal */
+        .modal-header {
+            background-color: #9A5A8F; /* Cor do botão principal */
+            color: white;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+        }
+        /* Estilos para os botões do rodapé do modal */
+        .modal-footer button {
+            border-radius: 8px;
+        }
+        /* Estilos para o conteúdo do modal */
+        .modal-content {
+            border-radius: 15px;
+        }
